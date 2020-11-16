@@ -1,0 +1,32 @@
+Bazy danych używane komendy
+Zad1 ad 1
+select * from postac where rodzaj='wiking' and nazwa!='Bjorn';
+delete from postac where rodzaj='wiking' and nazwa='Thor';
+delete from postac where rodzaj='wiking' and nazwa='Ragnar';
+Zad1 ad 2
+alter table walizka drop foreign key walizka_ibfk_1;
+alter table przetwory drop foreign key przetwory_ibfk_1; /*najprawdopodobniej miałem podpięty foreign key do id_konsumenta oraz id_wykonawcy 
+alter table przetwory drop foreign key przetwory_ibfk_2;
+alter table postac modify id_postaci int;
+ALTER TABLE postac DROP PRIMARY KEY;
+
+Zad 2 ad 1
+alter table postac add pesel varchar(11);
+update postac set pesel='48756309876'+id_postaci;
+select * from postac;
+alter table postac add primary key(pesel);
+Zad 2 ad 2
+ ALTER TABLE postac MODIFY rodzaj enum('wiking', 'kobieta', 'ptak', 'syrena');
+Zad 2 ad 3
+select * from postac;
+insert into postac values(8, 'Gertruda Nieszczera', 'syrena', '1300-03-26', null, null, 19867534098);
+select * from postac;
+Zad 3 ad a
+select nazwa from postac where nazwa like '%a%';
+update postac set statek='Magdalena' where nazwa like '%a%';
+select * from postac;
+Zad 3 ad b
+update statek set maks_ladownosc=maks_ladownosc*0.7 where data_wodowania >= '1901-01-01' and data_wodowania <'2001-01-01'; 
+/* w moim przypadku nic sie nie zmieniło ponieważ miałem date wodowania na 1600 rok na obydwu statkach
+
+
