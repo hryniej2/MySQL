@@ -1,0 +1,73 @@
+LAB_04
+
+Zad 3c
+ alter table postac add check (wiek <1001);
+ insert into postac values (10, 'Maciek', 'wiking', '1939-02-10', 1002, NULL, NULL, 19658756541);
+/ Warunek zadziałał, dodanie rekordu do tabeli zostało odrzucone.
+
+Zad 4a
+alter table postac modify rodzaj enum(wiking, ptak, kobieta, syrena, waz);
+insert into postac values (9, 'Waz Loko', 'waz', '1100-02-03', 900, NULL, NULL, '986756542');
+Zad 4b
+create table marynaz LIKE postac;
+insert into marynaz select * from postac where statek != NULL;
+CREATE TABLE marynaz_2 SELECT * FROM postac; /komenda kopiuje tabelę 1 do 1 bez możliwości wstawienia warunku
+ale nie pobiera kluczy własnych.
+drop table marynaz_2;
+
+Zad 5a
+ update postac set statek=Null;
+select * from postac;
+Zad 5b
+delete from postac where nazwa= 'Loki';
+select * from postac;
+Zad 5c
+delete from statek;
+select * from statek; / z tabeli zostały usunięte obydwa rekordy
+Zad 5d
+ALTER TABLE postac DROP FOREIGN KEY postac_ibfk_1; /opuszczenie klucza obcego blokującego usunięcie tabeli
+drop table statek;
+show tables; /tabela została prawidlowo usunięta
+Zad 5e
+ create table zwierz(id int primary key auto_increment, nazwa varchar(40), wiek int);
+show tables; /tabela poprawnie utworzona
+Zad 5f
+select * from postac where rodzaj= 'waz' or rodzaj= 'ptak';
+insert into zwierz select id_postaci, nazwa, wiek from postac where rodza
+j= 'waz' or rodzaj= 'ptak';
+select * from zwierz; /poprawnio pobrano odpowiednie dane z tabeli postac.
+
+LAB_05
+Zad 1.1
+CREATE TABLE kreatura  SELECT * FROM wikingowie.kreatura;
+create table zasob select * from wikingowie.zasob;
+create table ekwipunek select * from wikingowie.ekwipunek;
+Zad 1.2
+select * from zasob;
+Zad 1.3
+select * from zasob where rodzaj= 'jedzenie';
+Zad 1.4
+ select idZasobu, ilosc from ekwipunek where idKreatury= 1 or idKreatury=2 or idKreatury=3;
+
+Zad 2.1
+select * from kreatura where rodzaj!= 'wiedzma' and waga >= 50; /ew. select nazwa from... jeśli mają być wyświetlone same nazwy kreatur
+Zad 2.2
+select nazwa from zasob where waga between 2 and 5;
+zad 2.3
+ select nazwa from kreatura where nazwa like '%or%' and udzwig between 30
+and 70;
+
+Zad 3.1
+select * from zasob where month(dataPozyskania) in (7,8);
+Zad 3.2
+select * from zasob where rodzaj!= '' order by waga;
+Zad 3.3
+select * from kreatura order by dataUr limit 5;
+
+Zad 4.1
+ select distinct rodzaj from zasob;
+
+Zad 4.2
+select concat(nazwa,'-', rodzaj) from kreatura where rodzaj like 'wi%';
+
+
