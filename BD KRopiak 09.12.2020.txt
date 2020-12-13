@@ -1,0 +1,52 @@
+Zad 3.1
+delimiter $$
+create procedure eliksir_sily(IN id int)
+begin
+update kreatura set udzwig = udzwig*1.2 where idKreatury=id ;
+end
+$$ 
+delimiter;
+
+Zad 3.2???
+delimiter $$
+create function duzy_tekst(tekst)
+returns varchar(200)
+begin
+declare duze_litery varchar(255);
+select Upper(tekst) into @duze_litery;
+return @duze_litery;
+end 
+$$
+delimiter ;
+
+Zad 4.1
+create table system_alarmowy (id_alarmu int, wiadomosc varchar(255));
+Zad 4.2
+delimiter $$
+create trigger sprawdz_tesciowa
+after insert on wyprawa
+for each row
+begin
+declare zmienna int;
+select count(*) into zmienna
+from etapy_wyprawy as e, kreatura as k, wyprawa as w, uczestnicy as u
+where e.idWyprawy=w.id_wyprawy and k.idKreatury=u.id_uczestnika
+and u.id_wyprawy=w.id_wyprawy
+and k.nazwa='Tesciowa' and e.sektor=7
+and w.id_wyprawy=new.id_wyprawy;
+if zmienna > 0
+then
+  insert into system_alarmowy values(default, 'Tesciowa nadchodzi !!!');
+end if;
+end
+$$
+delimiter ;
+
+Zad 5.1
+delimiter $$
+create procedure udzwig(out sr float, out su float, out max float)
+begin
+select avg(udzwig), sum(udzwig), max(udzwig) into sr, su, max from kreatura;
+end
+$$
+delimiter ;

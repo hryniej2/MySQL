@@ -1,0 +1,28 @@
+Lab_08
+Zad. 1
+delimiter //
+create trigger kreatura_before_insert_update
+before insert on kreatura
+for each row
+begin
+if new.waga < 0
+then
+set new.waga = 0;
+end if;
+end
+//
+delimiter ;
+
+
+Zad. 2
+ create table archiwum_wypraw ( id_wyprawy int, nazwa varchar(200), data_rozpoczecia date, data_zakonczenia date, kierownik varchar(40));                        
+
+delimiter $$  
+create trigger wyprawa_after_delete
+after delete on wyprawa
+for each row
+begin
+insert into archiwum_wypraw select w.id_wyprawy, w.nazwa, w.data_rozpoczecia, w.data_zakonczenia, k.nazwa from wyprawa w, kreatura k where w.kierownik=k.idKreatury and w.id_wyprawy=old.id_wyprawy;
+end
+$$   
+delimiter ;
